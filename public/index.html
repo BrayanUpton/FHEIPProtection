@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private IP Protection - Patent Application System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔒 Private IP Protection</h1>
+            <p>Secure Patent Application System with Encrypted Data Storage</p>
+            <div class="wallet-status">
+                <button id="connectWallet" class="btn btn-primary">Connect Wallet</button>
+                <div id="walletInfo" class="wallet-info hidden">
+                    <span id="walletAddress"></span>
+                    <span id="walletBalance"></span>
+                </div>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="submit">Submit Patent</button>
+            <button class="tab-btn" data-tab="status">Application Status</button>
+            <button class="tab-btn" data-tab="examiner">Examiner Panel</button>
+            <button class="tab-btn" data-tab="admin">Admin Panel</button>
+        </nav>
+
+        <!-- Submit Patent Tab -->
+        <div id="submit" class="tab-content active">
+            <div class="card">
+                <h2>Submit Patent Application</h2>
+                <form id="patentForm">
+                    <div class="form-group">
+                        <label for="patentTitle">Patent Title:</label>
+                        <input type="text" id="patentTitle" required placeholder="Enter patent title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patentDescription">Description:</label>
+                        <textarea id="patentDescription" required placeholder="Detailed description of the invention"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patentClaims">Claims:</label>
+                        <textarea id="patentClaims" required placeholder="Patent claims"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patentCategory">Category:</label>
+                        <select id="patentCategory" required>
+                            <option value="">Select category</option>
+                            <option value="1">Software/Technology</option>
+                            <option value="2">Mechanical</option>
+                            <option value="3">Chemical</option>
+                            <option value="4">Biological</option>
+                            <option value="5">Electrical</option>
+                            <option value="6">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="fee-info">
+                        <p><strong>Application Fee: 0.1 ETH</strong></p>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit Application</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Application Status Tab -->
+        <div id="status" class="tab-content">
+            <div class="card">
+                <h2>My Patent Applications</h2>
+                <button id="loadApplications" class="btn btn-secondary">Load My Applications</button>
+                <div id="applicationsList" class="applications-list"></div>
+            </div>
+
+            <div class="card">
+                <h2>Check Application Status</h2>
+                <div class="form-group">
+                    <label for="applicationId">Application ID:</label>
+                    <input type="number" id="applicationId" placeholder="Enter application ID">
+                    <button id="checkStatus" class="btn btn-secondary">Check Status</button>
+                </div>
+                <div id="statusResult" class="status-result"></div>
+            </div>
+        </div>
+
+        <!-- Examiner Panel Tab -->
+        <div id="examiner" class="tab-content">
+            <div class="card">
+                <h2>Examiner Dashboard</h2>
+                <button id="loadWorkload" class="btn btn-secondary">Load My Workload</button>
+                <div id="examinerWorkload" class="workload-info"></div>
+            </div>
+
+            <div class="card">
+                <h2>Submit Review Decision</h2>
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label for="reviewApplicationId">Application ID:</label>
+                        <input type="number" id="reviewApplicationId" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reviewDecision">Decision:</label>
+                        <select id="reviewDecision" required>
+                            <option value="">Select decision</option>
+                            <option value="2">Approved</option>
+                            <option value="3">Rejected</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reviewFeedback">Feedback:</label>
+                        <textarea id="reviewFeedback" required placeholder="Review feedback"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="makePublic">
+                            Make decision public
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Panel Tab -->
+        <div id="admin" class="tab-content">
+            <div class="card">
+                <h2>Authorize Examiner</h2>
+                <form id="examinerForm">
+                    <div class="form-group">
+                        <label for="examinerAddress">Examiner Address:</label>
+                        <input type="text" id="examinerAddress" required placeholder="0x...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specialization">Specialization:</label>
+                        <input type="text" id="specialization" required placeholder="e.g., Software Patents">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Authorize Examiner</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>Assign Application</h2>
+                <form id="assignForm">
+                    <div class="form-group">
+                        <label for="assignApplicationId">Application ID:</label>
+                        <input type="number" id="assignApplicationId" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assignExaminerAddress">Examiner Address:</label>
+                        <input type="text" id="assignExaminerAddress" required placeholder="0x...">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Assign Application</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>Admin Functions</h2>
+                <button id="withdrawFees" class="btn btn-secondary">Withdraw Fees</button>
+                <div id="contractInfo" class="contract-info">
+                    <p>Application Count: <span id="appCount">-</span></p>
+                    <p>Contract Balance: <span id="contractBalance">-</span> ETH</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <p>Processing transaction...</p>
+    </div>
+
+    <div id="notification" class="notification hidden">
+        <span id="notificationMessage"></span>
+        <button id="closeNotification">×</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
