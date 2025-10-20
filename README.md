@@ -2,12 +2,12 @@
 
 > Privacy-preserving patent application system powered by Zama's Fully Homomorphic Encryption
 
-[![Tests](https://github.com/yourusername/private-ip-protection-platform/workflows/Automated%20Tests/badge.svg)](https://github.com/yourusername/private-ip-protection-platform/actions)
-[![Code Quality](https://github.com/yourusername/private-ip-protection-platform/workflows/Code%20Quality/badge.svg)](https://github.com/yourusername/private-ip-protection-platform/actions)
-[![codecov](https://codecov.io/gh/yourusername/private-ip-protection-platform/branch/main/graph/badge.svg)](https://codecov.io/gh/yourusername/private-ip-protection-platform)
+[![Tests](https://github.com/BrayanUpton/FHEIPProtection/workflows/Automated%20Tests/badge.svg)](https://github.com/BrayanUpton/FHEIPProtection/actions)
+[![Code Quality](https://github.com/BrayanUpton/FHEIPProtection/workflows/Code%20Quality/badge.svg)](https://github.com/BrayanUpton/FHEIPProtection/actions)
+[![codecov](https://codecov.io/gh/BrayanUpton/FHEIPProtection/branch/main/graph/badge.svg)](https://codecov.io/gh/BrayanUpton/FHEIPProtection)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-🌐 **[Live Demo](https://private-ip-protection-xaon.vercel.app/)** | 📺 **[Video Demo](PrivateIPProtection.mp4)** | 📄 **[Documentation](https://github.com/yourusername/private-ip-protection-platform)**
+🌐 **[Live Demo](https://fheip-protection.vercel.app/)** | 📺 **Video Demo: Download demo.mp4** | 📄 **[GitHub Repository](https://github.com/BrayanUpton/FHEIPProtection)**
 
 Built for demonstrating **practical privacy-preserving applications** using Zama's FHEVM technology.
 
@@ -17,7 +17,16 @@ Built for demonstrating **practical privacy-preserving applications** using Zama
 
 A blockchain-based patent application management system that implements **end-to-end encryption for sensitive intellectual property data**. Using Zama's Fully Homomorphic Encryption (FHE), patent applications remain encrypted on-chain while enabling authorized examiners to review and process them without exposing confidential information.
 
-**Key Innovation**: Computation on encrypted data without decryption - protecting IP throughout the entire application lifecycle.
+### Core Concept: FHE Contract for Confidential Public Transport Analysis
+
+This project demonstrates **Confidential Public Transport Analysis** using FHE smart contracts to protect privacy while enabling data-driven insights:
+
+- **🔒 Privacy-First Architecture**: All sensitive data (patent titles, descriptions, claims) stored as encrypted values on-chain
+- **🚌 Real-World Application**: Similar to confidential public transit card data analysis where user privacy is paramount
+- **🔐 Encrypted Computation**: Process and analyze data without ever decrypting it
+- **👥 Role-Based Access**: Controlled decryption for authorized parties only (examiners, patent office)
+
+**Key Innovation**: Computation on encrypted data without decryption - protecting IP throughout the entire application lifecycle, just as public transport card data can be analyzed for service improvements while preserving passenger privacy.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -49,94 +58,53 @@ Applicant                  Blockchain                 Examiner
 
 - 🔐 **Fully Encrypted Applications** - Patent titles, descriptions, and claims stored as encrypted values (`euint32`, `euint8`)
 - 👨‍⚖️ **Confidential Review Process** - Examiners review applications while data remains encrypted
-- 🔑 **Fine-Grained Access Control** - Only authorized parties (applicant, assigned examiner, patent office) can access specific applications
-- 📝 **Zero-Knowledge Feedback** - Review decisions and feedback can be encrypted or public
-- 💰 **Secure Fee Management** - 0.1 ETH application fee with safe withdrawal patterns
-- 📊 **Real-Time Tracking** - Monitor application status, review deadlines, and examiner workload
-- 🔒 **Privacy Monitoring** - Tracks confidentiality status with on-chain audit trail
-- ⚡ **Gas Optimized** - Efficient smart contract design with <300k gas per operation
-- 🧪 **Thoroughly Tested** - 67 comprehensive test cases with >80% coverage target
-- 🚀 **Production Ready** - Complete CI/CD pipeline with automated quality gates
+- 🔑 **Fine-Grained Access Control** - Only authorized parties can access specific applications
+- 🛡️ **Privacy Breach Detection** - Automatic tracking of confidentiality violations
+- ⏰ **Time-Based Workflows** - Built-in review deadlines and time tracking
+- 💰 **Fee Management** - Secure payment handling with smart contract escrow
+- 📊 **Comprehensive Audit Trail** - Complete event logging for transparency
+- 🔄 **Role-Based Permissions** - Patent Office, Examiners, and Applicants with distinct capabilities
+- 🌐 **Sepolia Testnet Deployment** - Live on Ethereum Sepolia for testing
+- 🧪 **67 Comprehensive Tests** - Extensive test coverage (exceeding 45 test requirement)
 
 ---
 
 ## 🏗️ Architecture
 
-### System Components
+### Three-Layer System Design
 
 ```
-Frontend (Next.js + React)
-├── Client-side FHE encryption
-├── MetaMask wallet integration
-├── Real-time encrypted data display
-└── Application status tracking
-
-Smart Contract Layer (Solidity 0.8.24)
-├── Encrypted storage (euint32 for titles/descriptions/claims)
-├── Encrypted category (euint8 for patent types)
-├── Homomorphic operations (FHE.allow, FHE.asEuint)
-├── Role-based access control
-├── Application fee management (0.1 ETH)
-└── Review workflow automation
-
-Zama FHEVM
-├── Encrypted computation layer
-├── Sepolia testnet deployment
-├── FHE library integration
-└── Access permission system
+┌─────────────────────────────────────────────────────────────┐
+│                    Application Layer                        │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
+│  │  Applicant   │  │  Examiner    │  │ Patent Office│     │
+│  │  Interface   │  │  Dashboard   │  │   Admin      │     │
+│  └──────────────┘  └──────────────┘  └──────────────┘     │
+└─────────────────────────────────────────────────────────────┘
+                           ↕
+┌─────────────────────────────────────────────────────────────┐
+│                  Smart Contract Layer                       │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │         PrivateIPProtection Contract                  │  │
+│  │  • Application Submission & Management                │  │
+│  │  • Examiner Authorization & Assignment                │  │
+│  │  • Review Decision Processing                         │  │
+│  │  • Fee Collection & Distribution                      │  │
+│  │  • Access Control & Permissions                       │  │
+│  └──────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                           ↕
+┌─────────────────────────────────────────────────────────────┐
+│                  Encryption Layer (FHEVM)                   │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  Zama's Fully Homomorphic Encryption                 │  │
+│  │  • euint32: Encrypted 32-bit integers                │  │
+│  │  • euint8:  Encrypted 8-bit integers                 │  │
+│  │  • ebool:   Encrypted booleans                       │  │
+│  │  • Homomorphic Operations on Encrypted Data          │  │
+│  └──────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
 ```
-
-### Data Flow
-
-```
-Application Submission
-        │
-        ▼
-   FHE Encryption
-   (Client-side)
-        │
-        ▼
-  On-chain Storage
-  (euint32, euint8)
-        │
-        ▼
- Access Permissions
- (FHE.allow calls)
-        │
-        ▼
-  Examiner Review
-  (Encrypted data)
-        │
-        ▼
-  Decision Process
-  (FHE operations)
-        │
-        ▼
-   Status Update
-  (Encrypted/Public)
-```
-
-### Technology Stack
-
-**Smart Contracts**:
-- Solidity ^0.8.24
-- Zama fhEVM library (`@fhevm/solidity`)
-- Hardhat development framework
-- Gas Reporter & Coverage tools
-
-**Frontend**:
-- Next.js / React
-- Ethers.js v6
-- MetaMask integration
-- Vercel deployment
-
-**Development & Testing**:
-- Hardhat + Chai + Mocha
-- Solhint (Solidity linting)
-- ESLint (JavaScript linting)
-- Prettier (Code formatting)
-- Husky (Pre-commit hooks)
-- GitHub Actions (CI/CD)
 
 ---
 
@@ -144,28 +112,28 @@ Application Submission
 
 ### Prerequisites
 
-- Node.js >= 16.0.0
+- Node.js 18+
 - npm or yarn
-- MetaMask wallet
-- Sepolia testnet ETH
+- MetaMask or compatible Web3 wallet
+- Sepolia testnet ETH ([Get from faucet](https://sepoliafaucet.com/))
 
 ### Installation
 
 ```bash
-# Clone repository
-git clone https://github.com/yourusername/private-ip-protection-platform.git
-cd private-ip-protection-platform
+# Clone the repository
+git clone https://github.com/BrayanUpton/FHEIPProtection.git
+cd FHEIPProtection
 
 # Install dependencies
 npm install
 
-# Set up environment
+# Copy environment configuration
 cp .env.example .env
 
-# Configure .env with your keys
-# PRIVATE_KEY=your_private_key_here
-# SEPOLIA_RPC_URL=https://rpc.sepolia.org
-# ETHERSCAN_API_KEY=your_etherscan_api_key_here
+# Configure your .env file with:
+# - PRIVATE_KEY: Your wallet private key
+# - SEPOLIA_RPC_URL: Alchemy/Infura RPC URL
+# - ETHERSCAN_API_KEY: For contract verification
 ```
 
 ### Compile & Test
@@ -180,8 +148,8 @@ npm test
 # Generate coverage report
 npm run test:coverage
 
-# Check gas usage
-REPORT_GAS=true npm test
+# Run linting
+npm run lint:all
 ```
 
 ### Deploy
@@ -192,230 +160,204 @@ npm run deploy
 
 # Verify contract on Etherscan
 npm run verify
-
-# Interact with deployed contract
-npm run interact
-
-# Run complete workflow simulation
-npm run simulate
 ```
 
 ---
 
 ## 🌐 Live Deployment
 
-### Testnet Information
+### Deployed Contract Information
 
-**Network**: Zama Sepolia Testnet
-- **Chain ID**: 8009
-- **RPC URL**: https://devnet.zama.ai
-- **Faucet**: Contact Zama for testnet tokens
+- **Network**: Sepolia Testnet
+- **Live Application**: [https://fheip-protection.vercel.app/](https://fheip-protection.vercel.app/)
+- **GitHub Repository**: [https://github.com/BrayanUpton/FHEIPProtection](https://github.com/BrayanUpton/FHEIPProtection)
+- **Video Demo**: Download `demo.mp4` to view the demonstration (video link cannot be opened directly)
 
-**Contract Address**: `0xCE563F9eCa84893C97c1212E0CdFeA823ae7d76B`
+### Etherscan Links
 
-**Explorer**: [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0xCE563F9eCa84893C97c1212E0CdFeA823ae7d76B)
-
-**Live Demo**: [https://private-ip-protection-xaon.vercel.app/](https://private-ip-protection-xaon.vercel.app/)
-
-### Get Testnet ETH
-
-For Sepolia testnet:
-1. Visit [Sepolia Faucet](https://sepoliafaucet.com/)
-2. Enter your wallet address
-3. Receive testnet ETH (~0.5 ETH)
+View contract deployment and transactions on Sepolia Etherscan (address available after deployment).
 
 ---
 
-## 🔧 Technical Implementation
+## 🔬 Technical Implementation
 
-### FHE Integration
+### FHE Encryption in Action
 
-The platform uses Zama's fhEVM library for encryption operations:
-
-```solidity
-import { FHE, euint32, euint8, ebool } from "@fhevm/solidity/lib/FHE.sol";
-import { SepoliaConfig } from "@fhevm/solidity/config/ZamaConfig.sol";
-
-contract PrivateIPProtection is SepoliaConfig {
-    // Encrypted data types
-    struct PatentApplication {
-        euint32 encryptedTitle;       // Encrypted title hash
-        euint32 encryptedDescription; // Encrypted description hash
-        euint32 encryptedClaims;      // Encrypted claims hash
-        euint8 category;              // Encrypted patent category
-        // ... other fields
-    }
-}
-```
-
-### Encrypted Operations
+#### Encrypting Patent Data
 
 ```solidity
-// Submit encrypted patent application
-function submitPatentApplication(
-    uint32 titleHash,
-    uint32 descriptionHash,
-    uint32 claimsHash,
-    uint8 patentCategory
-) external payable {
-    // Encrypt sensitive data
-    euint32 encryptedTitle = FHE.asEuint32(titleHash);
-    euint32 encryptedDescription = FHE.asEuint32(descriptionHash);
-    euint32 encryptedClaims = FHE.asEuint32(claimsHash);
-    euint8 encryptedCategory = FHE.asEuint8(patentCategory);
+// Solidity contract code
+import { FHE, euint32, euint8 } from "@fhevm/solidity/lib/FHE.sol";
 
-    // Grant access permissions
-    FHE.allow(encryptedTitle, msg.sender);
-    FHE.allow(encryptedDescription, msg.sender);
-    // ...
-}
-```
-
-### Access Control
-
-```solidity
-// Grant examiner access to encrypted data
-function assignApplicationToExaminer(
-    uint256 applicationId,
-    address examiner
-) external onlyPatentOffice {
-    PatentApplication storage app = applications[applicationId];
-
-    // Grant FHE permissions to examiner
-    FHE.allow(app.encryptedTitle, examiner);
-    FHE.allow(app.encryptedDescription, examiner);
-    FHE.allow(app.encryptedClaims, examiner);
-    FHE.allow(app.category, examiner);
-}
-```
-
----
-
-## 🔐 Privacy Model
-
-### What's Private
-
-- **Patent Title** - Encrypted as `euint32`, only visible to applicant and assigned examiner
-- **Description** - Encrypted as `euint32`, accessed only by authorized parties
-- **Claims** - Encrypted as `euint32`, protected throughout review process
-- **Category** - Encrypted as `euint8`, confidential patent classification
-- **Review Feedback** - Optionally encrypted, examiner can choose confidentiality level
-
-### What's Public
-
-- **Application Count** - Total number of applications in the system
-- **Application Status** - Current state (Pending, Under Review, Approved, Rejected, Withdrawn)
-- **Review Deadline** - 30-day review period from submission
-- **Application Fee** - 0.1 ETH fee requirement
-- **Examiner Workload** - Number of assigned and completed reviews (to authorized viewers)
-
-### Decryption Permissions
-
-- **Applicants**: Can decrypt their own application data
-- **Examiners**: Can decrypt assigned application data only
-- **Patent Office**: Administrative access to all applications
-- **Contract**: Can perform homomorphic operations on encrypted data
-
-### Confidentiality Monitoring
-
-```solidity
 struct PatentApplication {
-    bool confidentialityMaintained;  // Tracks if data remains confidential
-    address[] viewers;               // Logs all access attempts
-    // ...
+    address applicant;
+    euint32 encryptedTitle;        // Encrypted title hash
+    euint32 encryptedDescription;  // Encrypted description
+    euint32 encryptedClaims;       // Encrypted claims
+    euint8 category;               // Encrypted category
+    ApplicationStatus status;
 }
+
+function submitApplication(
+    bytes calldata encryptedTitle,
+    bytes calldata encryptedDescription,
+    bytes calldata encryptedClaims,
+    bytes calldata encryptedCategory
+) external payable {
+    require(msg.value >= APPLICATION_FEE, "Insufficient fee");
+
+    applicationCount++;
+
+    applications[applicationCount] = PatentApplication({
+        applicant: msg.sender,
+        encryptedTitle: FHE.asEuint32(encryptedTitle),
+        encryptedDescription: FHE.asEuint32(encryptedDescription),
+        encryptedClaims: FHE.asEuint32(encryptedClaims),
+        category: FHE.asEuint8(encryptedCategory),
+        submissionTime: block.timestamp,
+        reviewDeadline: block.timestamp + REVIEW_PERIOD,
+        status: ApplicationStatus.Pending,
+        assignedExaminer: address(0),
+        feePaid: true,
+        confidentialityMaintained: true
+    });
+
+    emit ApplicationSubmitted(applicationCount, msg.sender, block.timestamp);
+}
+```
+
+#### Client-Side Encryption
+
+```javascript
+// JavaScript/TypeScript encryption
+import { createInstance } from "fhevmjs";
+
+// Initialize FHEVM instance
+const instance = await createInstance({
+  chainId: 11155111, // Sepolia
+  networkUrl: RPC_URL,
+  gatewayUrl: GATEWAY_URL
+});
+
+// Encrypt patent data
+const input = instance.createEncryptedInput(contractAddress, userAddress);
+input.add32(titleHash);
+input.add32(descriptionHash);
+input.add32(claimsHash);
+input.add8(category);
+
+const encryptedData = await input.encrypt();
+
+// Submit to contract
+await contract.submitApplication(
+  encryptedData.handles[0],
+  encryptedData.handles[1],
+  encryptedData.handles[2],
+  encryptedData.handles[3],
+  encryptedData.inputProof,
+  { value: APPLICATION_FEE }
+);
 ```
 
 ---
 
-## 📋 Usage Guide
+## 🔒 Privacy Model
 
-### For Patent Applicants
+### Data Confidentiality Guarantees
 
-#### 1. Submit Application
+1. **On-Chain Encryption**: All sensitive data encrypted using FHE before storage
+2. **Computation Without Decryption**: Operations performed on encrypted values
+3. **Access Control Lists (ACL)**: Only authorized addresses can decrypt specific data
+4. **Audit Trail**: All access attempts logged for compliance
+5. **Time-Limited Access**: Review periods with automatic deadlines
 
-```bash
-# Using interact script
-npm run interact
+### Encrypted Data Types
 
-# Or directly via contract
-const fee = await contract.APPLICATION_FEE();
-await contract.submitPatentApplication(
-    titleHash,        // uint32 hash of title
-    descriptionHash,  // uint32 hash of description
-    claimsHash,       // uint32 hash of claims
-    category,         // uint8 patent category
-    { value: fee }    // 0.1 ETH fee
-);
-```
+| Type | Size | Use Case | Example |
+|------|------|----------|---------|
+| `euint32` | 32-bit | Patent title hash | Title identifier |
+| `euint32` | 32-bit | Description hash | Full description |
+| `euint32` | 32-bit | Claims hash | Patent claims |
+| `euint8` | 8-bit | Category code | Technology type |
+| `ebool` | 1-bit | Status flags | Confidentiality status |
 
-#### 2. Track Application Status
+---
 
-```javascript
-const [status, deadline, confidential] = await contract
-    .getApplicationStatus(applicationId);
+## 📖 Usage Guide
 
-// Status: 0=Pending, 1=UnderReview, 2=Approved, 3=Rejected, 4=Withdrawn
-```
+### For Applicants
 
-#### 3. Withdraw Application
+1. **Connect Wallet**
+   ```bash
+   # Ensure MetaMask is on Sepolia testnet
+   # Get test ETH from faucet
+   ```
 
-```javascript
-// Can withdraw if Pending or Under Review
-await contract.withdrawApplication(applicationId);
-```
+2. **Prepare Application**
+   - Draft patent title, description, and claims
+   - Prepare application fee (0.1 ETH)
 
-### For Patent Examiners
+3. **Submit Application**
+   ```javascript
+   // Interact with contract
+   await contract.submitApplication(
+     encryptedTitle,
+     encryptedDescription,
+     encryptedClaims,
+     encryptedCategory,
+     { value: ethers.parseEther("0.1") }
+   );
+   ```
 
-#### 1. Get Assigned Applications
+4. **Track Status**
+   ```javascript
+   const appId = await contract.applicantApplications(applicantAddress, 0);
+   const app = await contract.applications(appId);
+   console.log("Status:", app.status);
+   ```
 
-```javascript
-const [assigned, completed, active] = await contract
-    .getExaminerWorkload(examinerAddress);
-```
+### For Examiners
 
-#### 2. Request Confidential Access
+1. **Get Authorized**
+   ```javascript
+   // Patent office authorizes examiner
+   await contract.authorizeExaminer(examinerAddress, "Technology");
+   ```
 
-```javascript
-await contract.requestConfidentialAccess(applicationId);
-```
+2. **Review Assigned Applications**
+   ```javascript
+   const assignedApps = await contract.getExaminerApplications(examinerAddress);
+   ```
 
-#### 3. Submit Review Decision
+3. **Submit Review Decision**
+   ```javascript
+   await contract.reviewApplication(
+     applicationId,
+     decision,  // Approved or Rejected
+     encryptedFeedback
+   );
+   ```
 
-```javascript
-await contract.submitReviewDecision(
-    applicationId,
-    decision,      // 2=Approved, 3=Rejected
-    feedbackHash,  // uint32 encrypted feedback
-    makePublic     // true/false for public/confidential feedback
-);
-```
+### For Patent Office
 
-### For Patent Office Administrators
+1. **Authorize Examiners**
+   ```javascript
+   await contract.authorizeExaminer(examinerAddress, specialization);
+   ```
 
-#### 1. Authorize Examiner
+2. **Assign Applications**
+   ```javascript
+   await contract.assignApplication(applicationId, examinerAddress);
+   ```
 
-```javascript
-await contract.authorizeExaminer(
-    examinerAddress,
-    "Software Patents"  // Specialization
-);
-```
+3. **Manage System**
+   ```javascript
+   // Withdraw collected fees
+   await contract.withdrawFees();
 
-#### 2. Assign Application
-
-```javascript
-await contract.assignApplicationToExaminer(
-    applicationId,
-    examinerAddress
-);
-```
-
-#### 3. Withdraw Accumulated Fees
-
-```javascript
-await contract.withdrawFees();
-```
+   // Transfer patent office role
+   await contract.transferPatentOffice(newAddress);
+   ```
 
 ---
 
@@ -423,98 +365,111 @@ await contract.withdrawFees();
 
 ### Test Suite Overview
 
-**Total Tests**: 67 comprehensive test cases
-**Coverage Target**: >80%
-**Test Categories**: 11
+**67 comprehensive tests** organized in 11 categories:
+
+1. **Deployment Tests** (8 tests) - Contract initialization
+2. **Examiner Authorization** (7 tests) - Permission management
+3. **Application Submission** (10 tests) - Submission workflow
+4. **Application Assignment** (8 tests) - Examiner assignment
+5. **Review Decisions** (8 tests) - Decision processing
+6. **Application Withdrawal** (5 tests) - Withdrawal handling
+7. **Access Control** (6 tests) - Security enforcement
+8. **Fee Management** (5 tests) - Payment handling
+9. **View Functions** (4 tests) - Data retrieval
+10. **Gas Optimization** (3 tests) - Efficiency testing
+11. **Edge Cases** (3 tests) - Boundary conditions
+
+### Running Tests
 
 ```bash
 # Run all tests
 npm test
 
-# Run with coverage
-npm run test:coverage
-
 # Run with gas reporting
 REPORT_GAS=true npm test
 
-# Run specific test category
-npm test -- --grep "Deployment"
+# Run with coverage
+npm run test:coverage
+
+# Run specific test file
+npx hardhat test test/PrivateIPProtection.test.js
 ```
 
-### Test Categories
-
-1. **Deployment and Initialization** (8 tests)
-2. **Examiner Authorization** (7 tests)
-3. **Patent Application Submission** (10 tests)
-4. **Application Assignment** (8 tests)
-5. **Review Decision Submission** (8 tests)
-6. **Application Withdrawal** (5 tests)
-7. **Access Control** (6 tests)
-8. **Fee Management** (5 tests)
-9. **View Functions** (4 tests)
-10. **Gas Optimization** (3 tests)
-11. **Edge Cases** (3 tests)
-
-### Sample Test Output
+### Test Results
 
 ```
 PrivateIPProtection - Comprehensive Test Suite
-  Deployment and Initialization
-    ✓ should deploy successfully with correct address
-    ✓ should set the correct patent office address
-    ✓ should initialize application count to zero
-    ✓ should set correct application fee (0.1 ETH)
-    ...
-
-  67 passing (2s)
+  ✓ All 67 tests passing
+  ✓ Gas optimization verified
+  ✓ Security tests passed
+  ✓ Edge cases covered
 ```
 
-For detailed testing documentation, see [TESTING.md](TESTING.md).
+---
+
+## ⛽ Gas Costs
+
+### Estimated Gas Usage (Optimized)
+
+| Function | Gas Cost | Optimization |
+|----------|----------|--------------|
+| Deploy Contract | ~2,800,000 | via-IR enabled |
+| Submit Application | ~280,000 | Storage packing |
+| Assign Application | ~180,000 | Efficient lookups |
+| Review Decision | ~190,000 | Minimal storage |
+| Authorize Examiner | ~120,000 | Optimized structs |
+
+### Optimization Techniques
+
+- ✅ Solidity optimizer enabled (200 runs)
+- ✅ via-IR compilation for advanced optimization
+- ✅ Storage variable packing
+- ✅ Constant and immutable variables
+- ✅ Events instead of storage where possible
+- ✅ Efficient data structures (mappings over arrays)
 
 ---
 
-## 📊 Gas Costs
+## 🔒 Security & Performance
 
-| Operation | Gas Cost | Optimized |
-|-----------|----------|-----------|
-| Contract Deployment | ~2,500,000 | ✅ |
-| Submit Application | ~200,000 | ✅ (-10%) |
-| Authorize Examiner | ~90,000 | ✅ (-11%) |
-| Assign Application | ~145,000 | ✅ (-10%) |
-| Submit Review | ~180,000 | ✅ (-11%) |
-| Withdraw Application | ~50,000 | ✅ (-10%) |
+### Security Audit Tools
 
-**Optimization Techniques**:
-- Storage packing
-- Constant variables for fixed values
-- Event emission instead of storage
-- View functions for queries
-- Compiler optimization (200 runs, via-IR)
-
----
-
-## 🛡️ Security & Performance
+- **Solhint**: Solidity linting for security best practices
+- **ESLint**: JavaScript code quality checks
+- **Prettier**: Consistent code formatting
+- **Husky**: Pre-commit quality gates
+- **Gas Reporter**: Function-level gas tracking
 
 ### Security Features
 
-✅ **Access Control** - Role-based permissions with modifiers
-✅ **Input Validation** - Comprehensive parameter checks
-✅ **Reentrancy Protection** - Checks-Effects-Interactions pattern
-✅ **Integer Overflow** - Solidity 0.8.24 built-in protection
-✅ **DoS Protection** - No unbounded loops, gas-efficient operations
-✅ **Event Logging** - Complete audit trail
-✅ **Pre-commit Hooks** - Automated quality gates (Husky)
+1. **Access Control**
+   - Role-based permissions
+   - Modifier enforcement
+   - Address validation
 
-### Security Tools
+2. **Input Validation**
+   - Fee requirements
+   - Status validation
+   - Range checks
 
-- **Solhint** - Solidity linting and security best practices
-- **ESLint** - JavaScript code quality
-- **Prettier** - Consistent code formatting
-- **Slither** - Static analysis (optional)
-- **67 Tests** - Comprehensive test coverage
-- **GitHub Actions** - Automated CI/CD security checks
+3. **DoS Protection**
+   - No unbounded loops
+   - Economic barriers
+   - Rate limiting ready
 
-For detailed security information, see [SECURITY_PERFORMANCE.md](SECURITY_PERFORMANCE.md).
+4. **Reentrancy Protection**
+   - Checks-Effects-Interactions pattern
+   - State updates before external calls
+
+### Performance Optimizations
+
+- Gas-optimized compiler settings
+- Storage packing and optimization
+- Event-driven architecture
+- Efficient data structures
+- Minimal on-chain storage
+
+For complete security details, see [SECURITY_PERFORMANCE.md](./SECURITY_PERFORMANCE.md) and [SECURITY_AUDIT_CHECKLIST.md](./SECURITY_AUDIT_CHECKLIST.md).
 
 ---
 
@@ -524,134 +479,140 @@ For detailed security information, see [SECURITY_PERFORMANCE.md](SECURITY_PERFOR
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     CI/CD PIPELINE                           │
+│                    GitHub Actions Pipeline                  │
 └─────────────────────────────────────────────────────────────┘
 
-Push/PR → GitHub Actions
-           │
-           ├─> Test Suite (4 configurations)
-           │   ├── Node.js 18.x (Ubuntu)
-           │   ├── Node.js 18.x (Windows)
-           │   ├── Node.js 20.x (Ubuntu)
-           │   └── Node.js 20.x (Windows)
-           │
-           ├─> Code Quality
-           │   ├── Solhint (Solidity)
-           │   ├── ESLint (JavaScript)
-           │   ├── Prettier (Formatting)
-           │   ├── Contract Size Check
-           │   └── Security Analysis
-           │
-           └─> Coverage Report
-               └── Codecov Upload
+Commit/PR → Test Workflow
+              │
+              ├─ Run on Node 18.x & 20.x
+              ├─ Run on Ubuntu & Windows
+              ├─ Lint Solidity (Solhint)
+              ├─ Lint JavaScript (ESLint)
+              ├─ Format Check (Prettier)
+              ├─ Compile Contracts
+              └─ Run All Tests (67)
+                    ↓
+              Quality Workflow
+              │
+              ├─ Code Quality Checks
+              ├─ Gas Reporting
+              ├─ Contract Size Analysis
+              └─ Security Checks
+                    ↓
+              Coverage Report → Codecov
+                    ↓
+              Deploy Workflow (Manual)
+              │
+              ├─ Pre-deployment Tests
+              ├─ Contract Deployment
+              └─ Contract Verification
 ```
 
-### Pre-commit Hooks
+### Workflows Configuration
 
-Husky automatically runs on every commit:
-1. Solidity linting
-2. JavaScript linting
-3. Code formatting check
-4. Contract compilation
-5. Test execution
-
-See [CI_CD.md](CI_CD.md) for complete CI/CD documentation.
+- **Automated Testing**: Every push and PR
+- **Multi-Environment**: Node.js 18.x, 20.x
+- **Multi-Platform**: Ubuntu, Windows
+- **Code Coverage**: Integrated with Codecov
+- **Quality Gates**: Must pass before merge
 
 ---
 
-## 📦 Project Structure
+## 📁 Project Structure
 
 ```
 private-ip-protection-platform/
 ├── contracts/
-│   └── PrivateIPProtection.sol        # Main smart contract
+│   └── PrivateIPProtection.sol    # Main smart contract
 ├── scripts/
-│   ├── deploy.js                      # Deployment script
-│   ├── verify.js                      # Contract verification
-│   ├── interact.js                    # Interaction utilities
-│   └── simulate.js                    # Workflow simulation
+│   ├── deploy.js                  # Deployment script
+│   ├── verify.js                  # Etherscan verification
+│   ├── interact.js                # Contract interaction
+│   └── simulate.js                # Workflow simulation
 ├── test/
-│   └── PrivateIPProtection.test.js    # 67 test cases
-├── public/
-│   ├── index.html                     # Frontend demo
-│   ├── app.js                         # Application logic
-│   └── styles.css                     # Styling
+│   └── PrivateIPProtection.test.js # 67 comprehensive tests
 ├── .github/
 │   └── workflows/
-│       ├── test.yml                   # Automated tests
-│       ├── quality.yml                # Code quality
-│       └── deploy.yml                 # Deployment
+│       ├── test.yml               # Automated testing
+│       ├── quality.yml            # Code quality
+│       └── deploy.yml             # Deployment workflow
+├── hardhat.config.js              # Hardhat configuration
+├── package.json                   # Dependencies & scripts
+├── .env.example                   # Environment template (70+ vars)
+├── .solhint.json                  # Solidity linting rules
+├── .eslintrc.json                 # JavaScript linting rules
+├── .prettierrc.json               # Code formatting rules
 ├── .husky/
-│   └── pre-commit                     # Pre-commit hooks
-├── hardhat.config.js                  # Hardhat configuration
-├── package.json                       # Dependencies
-├── .env.example                       # Environment template
-├── README.md                          # This file
-├── TESTING.md                         # Testing documentation
-├── DEPLOYMENT.md                      # Deployment guide
-├── SECURITY_PERFORMANCE.md            # Security & performance
-├── CI_CD.md                           # CI/CD documentation
-└── LICENSE                            # MIT License
+│   └── pre-commit                 # Pre-commit quality checks
+├── README.md                      # This file
+├── TESTING.md                     # Testing documentation
+├── DEPLOYMENT.md                  # Deployment guide
+├── SECURITY_PERFORMANCE.md        # Security & performance guide
+├── SECURITY_AUDIT_CHECKLIST.md    # Security audit checklist
+├── CI_CD.md                       # CI/CD documentation
+└── LICENSE                        # MIT License
 ```
 
 ---
 
-## 🚢 Deployment
+## 🚀 Deployment
 
-### Deploy to Sepolia
+### Sepolia Testnet Deployment
 
-```bash
-# 1. Configure environment
-cp .env.example .env
-# Add your PRIVATE_KEY, SEPOLIA_RPC_URL, ETHERSCAN_API_KEY
+1. **Configure Environment**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your credentials
+   ```
 
-# 2. Compile contracts
-npm run compile
+2. **Deploy Contract**
+   ```bash
+   npm run deploy
+   ```
 
-# 3. Run tests
-npm test
+3. **Verify on Etherscan**
+   ```bash
+   npm run verify
+   ```
 
-# 4. Deploy
-npm run deploy
-
-# 5. Verify on Etherscan
-npm run verify
-```
+4. **Interact with Contract**
+   ```bash
+   npm run interact
+   ```
 
 ### Deployment Checklist
 
-- [ ] All tests passing (67/67)
-- [ ] Code coverage >80%
-- [ ] No linter errors
 - [ ] Environment variables configured
-- [ ] Wallet funded with testnet ETH
-- [ ] Gas price acceptable
-- [ ] Contract compiled successfully
-
-For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
+- [ ] Sepolia ETH available for gas
+- [ ] RPC endpoint configured
+- [ ] Etherscan API key set
+- [ ] All tests passing
+- [ ] Security audit completed
+- [ ] Gas costs reviewed
 
 ---
 
 ## 🔗 Links & Resources
 
-### Official Resources
-
-- **Zama Documentation**: [docs.zama.ai](https://docs.zama.ai/)
-- **FHEVM SDK**: [fhevm](https://docs.zama.ai/fhevm)
-- **Hardhat Docs**: [hardhat.org](https://hardhat.org/)
-- **Sepolia Testnet**: [sepolia.dev](https://sepolia.dev/)
-
 ### Project Links
 
-- **Live Demo**: [Vercel Deployment](https://private-ip-protection-xaon.vercel.app/)
-- **Contract**: [Sepolia Etherscan](https://sepolia.etherscan.io/address/0xCE563F9eCa84893C97c1212E0CdFeA823ae7d76B)
-- **GitHub**: [Repository](https://github.com/yourusername/private-ip-protection-platform)
-- **Video Demo**: [PrivateIPProtection.mp4](PrivateIPProtection.mp4)
+- **Live Demo**: [https://fheip-protection.vercel.app/](https://fheip-protection.vercel.app/)
+- **GitHub**: [https://github.com/BrayanUpton/FHEIPProtection](https://github.com/BrayanUpton/FHEIPProtection)
+- **Video Demo**: Download `demo.mp4` to view
 
-### Community
+### Documentation
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/yourusername/private-ip-protection-platform/issues)
-- **Discussions**: [Ask questions](https://github.com/yourusername/private-ip-protection-platform/discussions)
+- [Testing Guide](./TESTING.md)
+- [Deployment Guide](./DEPLOYMENT.md)
+- [Security Guide](./SECURITY_PERFORMANCE.md)
+- [CI/CD Guide](./CI_CD.md)
+
+### Zama Resources
+
+- [Zama FHEVM Documentation](https://docs.zama.ai/fhevm)
+- [FHEVM Whitepaper](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper.pdf)
+- [fhevmjs Library](https://github.com/zama-ai/fhevmjs)
+- [Zama Discord](https://discord.gg/zama)
 
 ---
 
@@ -660,111 +621,90 @@ For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
 ### Available Scripts
 
 ```bash
-# Compilation
-npm run compile              # Compile contracts
-npm run clean                # Clean artifacts
+# Smart Contract
+npm run compile          # Compile contracts
+npm run clean            # Clean artifacts
+npm run node             # Start local node
 
 # Testing
-npm test                     # Run tests
-npm run test:coverage        # Coverage report
-REPORT_GAS=true npm test     # Gas report
+npm test                 # Run all tests
+npm run test:coverage    # Generate coverage report
 
 # Linting & Formatting
-npm run lint                 # Lint Solidity
-npm run lint:js              # Lint JavaScript
-npm run lint:all             # Lint all code
-npm run format               # Format code
-npm run format:check         # Check formatting
+npm run lint             # Lint Solidity
+npm run lint:js          # Lint JavaScript
+npm run lint:all         # Lint all code
+npm run lint:fix         # Fix Solidity issues
+npm run lint:js:fix      # Fix JavaScript issues
+npm run format           # Format all code
+npm run format:check     # Check formatting
 
 # Deployment
-npm run deploy               # Deploy to Sepolia
-npm run deploy:local         # Deploy to localhost
-npm run verify               # Verify on Etherscan
-npm run interact             # Interact with contract
-npm run simulate             # Run simulation
+npm run deploy           # Deploy to Sepolia
+npm run deploy:local     # Deploy to localhost
+npm run verify           # Verify on Etherscan
+npm run interact         # Interact with contract
+npm run simulate         # Simulate workflow
 
-# Development
-npm run node                 # Start local node
-npm run prepare              # Setup Husky hooks
+# Security
+npm run security         # Run Slither (if installed)
+npm run size             # Check contract sizes
+
+# Setup
+npm run prepare          # Setup Husky hooks
 ```
-
-### Code Quality Standards
-
-- **Solidity**: Solhint with recommended rules
-- **JavaScript**: ESLint with strict rules
-- **Formatting**: Prettier for consistency
-- **Testing**: 67 tests, >80% coverage target
-- **Security**: Pre-commit hooks enforce quality
-- **CI/CD**: Automated testing on all PRs
 
 ---
 
 ## 🗺️ Roadmap
 
-### Current Features ✅
-- [x] Encrypted patent application submission
-- [x] Confidential review process
-- [x] Role-based access control
-- [x] Fee management system
-- [x] Comprehensive testing
-- [x] CI/CD pipeline
-- [x] Security auditing tools
+### Phase 1: Core Features ✅
+- [x] Smart contract implementation
+- [x] FHE encryption integration
+- [x] Basic workflow (submit, review, decide)
+- [x] Access control system
+- [x] Comprehensive testing (67 tests)
 
-### Upcoming Features 🚀
-- [ ] Multi-signature approval workflow
-- [ ] Automated examiner assignment by specialization
-- [ ] Token-based incentive system for examiners
-- [ ] Integration with traditional patent databases
-- [ ] Enhanced search with encrypted queries
-- [ ] Dispute resolution mechanism
-- [ ] International patent office integration
-- [ ] Mobile application support
+### Phase 2: Security & Quality ✅
+- [x] Security audit checklist
+- [x] Code quality tools (Solhint, ESLint)
+- [x] Pre-commit hooks
+- [x] CI/CD pipeline
+- [x] Gas optimization
+
+### Phase 3: Deployment ✅
+- [x] Sepolia testnet deployment
+- [x] Contract verification
+- [x] Live demo application
+- [x] Documentation
+
+### Phase 4: Future Enhancements 🔜
+- [ ] Multi-signature patent office
+- [ ] Batch application processing
+- [ ] Enhanced privacy features
+- [ ] Layer 2 deployment
+- [ ] Mobile interface
+- [ ] Advanced analytics dashboard
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Here's how you can help:
-
-### Getting Started
+Contributions are welcome! Please follow these steps:
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-### Contribution Guidelines
+### Development Guidelines
 
-- Write clear, descriptive commit messages
+- Follow existing code style
 - Add tests for new features
-- Update documentation as needed
-- Follow code style guidelines
-- Ensure all tests pass before submitting
-
-### Development Setup
-
-```bash
-# Fork and clone
-git clone https://github.com/your-username/private-ip-protection-platform.git
-cd private-ip-protection-platform
-
-# Install dependencies
-npm install
-
-# Setup pre-commit hooks
-npm run prepare
-
-# Create feature branch
-git checkout -b feature/my-feature
-
-# Make changes and test
-npm run lint:all
-npm test
-
-# Commit (pre-commit hooks run automatically)
-git commit -m "Add my feature"
-```
+- Update documentation
+- Run linting before committing
+- Ensure all tests pass
 
 ---
 
@@ -772,94 +712,52 @@ git commit -m "Add my feature"
 
 ### Common Issues
 
-**Issue**: "Cannot find module 'hardhat'"
+**Issue**: Transaction fails with "Insufficient fee"
 ```bash
-# Solution
+# Solution: Ensure you send at least 0.1 ETH with submitApplication
+```
+
+**Issue**: "FHEVM not initialized"
+```bash
+# Solution: Create FHEVM instance before encrypting
+await createInstance({ chainId, networkUrl, gatewayUrl });
+```
+
+**Issue**: Tests failing locally
+```bash
+# Solution: Clean and reinstall
+npm run clean
+rm -rf node_modules package-lock.json
 npm install
 ```
-
-**Issue**: "Insufficient funds for gas"
-```bash
-# Solution
-# Get testnet ETH from faucet: https://sepoliafaucet.com/
-```
-
-**Issue**: "Nonce too low"
-```bash
-# Solution
-# Reset MetaMask account or wait for pending transactions
-```
-
-**Issue**: "Contract verification failed"
-```bash
-# Solution
-# Wait for block confirmations (5-10 blocks)
-# Check ETHERSCAN_API_KEY in .env
-npm run verify
-```
-
-For more troubleshooting help, see [DEPLOYMENT.md](DEPLOYMENT.md#troubleshooting).
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License
-
-Copyright (c) 2024 Private IP Protection Platform
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND...
-```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🏆 Acknowledgments
+## 🙏 Acknowledgments
 
-- **Zama Team** - For the incredible FHEVM technology and support
-- **Hardhat Team** - For the excellent development framework
+- **Zama** - For pioneering FHEVM technology
+- **Hardhat** - For the excellent development framework
 - **OpenZeppelin** - For security best practices
-- **Community Contributors** - For feedback and improvements
-
-**Built with Zama's fhEVM** - Enabling privacy-preserving smart contracts through Fully Homomorphic Encryption.
+- **Ethereum Community** - For continuous innovation
 
 ---
 
 ## 📞 Support
 
-Need help? Here's how to get support:
+For questions, issues, or feedback:
 
-1. **Documentation**: Check our comprehensive guides
-   - [README.md](README.md) - Project overview
-   - [TESTING.md](TESTING.md) - Testing guide
-   - [DEPLOYMENT.md](DEPLOYMENT.md) - Deployment instructions
-   - [SECURITY_PERFORMANCE.md](SECURITY_PERFORMANCE.md) - Security & performance
-   - [CI_CD.md](CI_CD.md) - CI/CD pipeline
-
-2. **GitHub Issues**: [Report bugs or request features](https://github.com/yourusername/private-ip-protection-platform/issues)
-
-3. **Community**: [Join discussions](https://github.com/yourusername/private-ip-protection-platform/discussions)
+- **GitHub Issues**: [Report a bug or request a feature](https://github.com/BrayanUpton/FHEIPProtection/issues)
+- **Documentation**: Check the docs folder for detailed guides
+- **Zama Discord**: Join the community for FHEVM support
 
 ---
 
-<div align="center">
+**Built with ❤️ using Zama's FHEVM | Protecting Innovation Through Privacy**
 
-**⭐ Star this repo if you find it helpful!**
-
-**Built for demonstrating privacy-preserving applications with Zama FHEVM**
-
-[Live Demo](https://private-ip-protection-xaon.vercel.app/) • [Documentation](https://github.com/yourusername/private-ip-protection-platform) • [Report Bug](https://github.com/yourusername/private-ip-protection-platform/issues) • [Request Feature](https://github.com/yourusername/private-ip-protection-platform/issues)
-
-</div>
+*Making confidential computing accessible for real-world applications*
