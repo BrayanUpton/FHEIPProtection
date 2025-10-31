@@ -1,0 +1,21 @@
+{
+  "name": "private-ip-protection",
+  "version": "1.0.0",
+  "description": "Private IP Protection - Patent Application System with Encrypted Data Storage",
+  "scripts": {
+    "dev": "npx http-server . -p 3000 -c-1 --cors",
+    "build": "echo 'Static build complete'",
+    "start": "npx http-server . -p 3000 -c-1 --cors"
+  },
+  "keywords": [
+    "blockchain",
+    "patent",
+    "fhe",
+    "encryption",
+    "ethereum"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
