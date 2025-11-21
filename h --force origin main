@@ -1,0 +1,229 @@
+[33mcommit 5504ac86bd5971f661ae916e5c3fdb0937a5f5d9[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: GeovanniParker <156462038+GeovanniParker@users.noreply.github.com>
+Date:   Sun Nov 30 08:00:00 2025 +0800
+
+    Add files via upload
+
+[33mcommit a51c29ee0d6308261df944b7fc5ecc3a6ffbfdb9[m
+Author: BrayanUpton <155849078+BrayanUpton@users.noreply.github.com>
+Date:   Sun Nov 30 18:29:40 2025 +0800
+
+    Add files via upload
+
+[33mcommit 863a3e55d685e4a964d91b91b4037aca4ad57fee[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Nov 29 18:01:58 2025 +0800
+
+    docs: update README
+
+[33mcommit 9dedf9d28e5a5f119aa827d4ffb017563d27363b[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sun Nov 30 00:30:12 2025 +0800
+
+    chore: add PrivateIPProtection.sol
+
+[33mcommit bd7a4ffbf90074a5ad020f84e470e3d693667ba7[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sun Nov 2 12:18:18 2025 +0800
+
+    feat: add new features in private-ip-protection-react (13 files)
+
+[33mcommit e71f91e661e608bebd0ca32d8057fee2bd6ddd69[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Oct 25 00:04:43 2025 +0800
+
+    docs: update README
+
+[33mcommit d268ceefdf1c76241f3607bc7a80fc62ee4fe284[m
+Author: BrayanUpton <dev@github.com>
+Date:   Tue Jul 15 04:46:49 2025 +0800
+
+    chore: update assets: demo
+
+[33mcommit 0eb601beee7398108acdb207858e579bb3ff235c[m
+Author: BrayanUpton <dev@github.com>
+Date:   Tue Jul 15 04:46:48 2025 +0800
+
+    docs: update README
+
+[33mcommit 2852896fb6580c0a46e7b83245f6ad8d68abf325[m
+Author: BrayanUpton <dev@github.com>
+Date:   Tue Jul 15 04:46:47 2025 +0800
+
+    docs: update SECURITY_PERFORMANCE_IMPLEMENTATION documentation
+
+[33mcommit 65589cae5870a283af67af6709c6fbfeb9cb4f23[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sun Jul 13 15:41:53 2025 +0800
+
+    chore: update package.json
+
+[33mcommit 97797b2e9f92f36c0c81f5777ef383e910ce748d[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sun Jul 13 15:41:52 2025 +0800
+
+    docs: update SECURITY_AUDIT_CHECKLIST documentation
+
+[33mcommit 78d718c562d19d734597710a7540a08d96c931ea[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sun Jul 13 11:38:16 2025 +0800
+
+    docs: update SECURITY_PERFORMANCE documentation
+
+[33mcommit c0005c86c7b6f0430399e1d08634acee57e7e8f9[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sun Jul 13 11:38:15 2025 +0800
+
+    chore: update .env.example
+
+[33mcommit a58f9b5dfaf1ee8d34a9d47faab945d3f8cc9f1b[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sun Jul 13 11:38:14 2025 +0800
+
+    chore: chore: chore: create .eslintignore
+
+[33mcommit 104e6bba1a5693a98c0e80ba94f9bdf62f131317[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sun Jul 13 11:38:13 2025 +0800
+
+    chore: update .eslintrc
+
+[33mcommit 66957e5d0faab4bd247008887386517d4eadb659[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sun Jul 13 11:38:12 2025 +0800
+
+    docs: update CI_CD_IMPLEMENTATION_SUMMARY documentation
+
+[33mcommit ec26663b34b6934d99d11486bc2d8366e394d3a9[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sun Jul 13 11:38:11 2025 +0800
+
+    docs: update CI_CD documentation
+
+[33mcommit 3f63874b7b952280e300cf824e6bda40414d780b[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sun Jul 13 11:38:10 2025 +0800
+
+    docs: update GITHUB_ACTIONS_SETUP documentation
+
+[33mcommit 5bb4fa401bf85ce8f175603d36b0836babc4648f[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sun Jul 13 11:38:09 2025 +0800
+
+    chore: update codecov.yml
+
+[33mcommit 0e890601415dfb126090c91a3a29e6863ebc89df[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 14:04:36 2025 +0800
+
+    docs: update SETUP_GUIDE documentation
+
+[33mcommit dc600219eb58fc44d44f3c8cab32dd736c865736[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 14:04:35 2025 +0800
+
+    docs: update TESTING documentation
+
+[33mcommit eafe181483c229c9317fa8d4b51f66a5e6733598[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 14:04:34 2025 +0800
+
+    docs: update LICENSE documentation
+
+[33mcommit 7224573d27cfacf0b7c794d482eb4b26cbfb94d6[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 14:04:33 2025 +0800
+
+    feat: add new features: hardhat.config
+
+[33mcommit 39a40ee7260a2baf5d78920d3204032747b427a5[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 14:04:32 2025 +0800
+
+    docs: update DEPLOYMENT documentation
+
+[33mcommit ca5f129760b059ec105d4c8c3317df4fd2a0230b[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 14:04:31 2025 +0800
+
+    chore: chore: chore: create .solhintignore
+
+[33mcommit a24eebb0b1195bea040da10f5b791cee14c12eb2[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 14:04:30 2025 +0800
+
+    chore: chore: chore: create .solhint
+
+[33mcommit f89958c384e3d82f14f2ef292ff234cd7e314712[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 14:04:29 2025 +0800
+
+    chore: chore: chore: create .prettierignore
+
+[33mcommit 7500d27a13687641b6efa4e0476e3e912774f448[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 14:04:28 2025 +0800
+
+    chore: update .prettierrc
+
+[33mcommit 78b19fff54a14a6d4d34770f2a7290f067432a48[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 13:54:00 2025 +0800
+
+    chore: update .gitignore
+
+[33mcommit a03cd0fa793700800cd8fa92b4e460fd2e66005c[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 13:53:59 2025 +0800
+
+    chore: chore: chore: pre-commit
+    
+    pre-commitpre-commit
+
+[33mcommit 0bc6442a90e0ef0abec4506f174b8db6a8cfc3cc[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 13:53:58 2025 +0800
+
+    ci: update CI/CD configuration
+
+[33mcommit a8ce58575535e75543a5b4faf23e335e10a9befd[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 13:53:57 2025 +0800
+
+    chore: chore: chore: create commit-msg
+
+[33mcommit 33b3abbc971058309e21694d60bcd650d1c7b9d0[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 13:53:56 2025 +0800
+
+    ci: update deploy workflow
+
+[33mcommit b539fdb146adf4e50a588b7ca28150e3adb61e1a[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 13:53:55 2025 +0800
+
+    test: add new tests: PrivateIPProtection.test
+
+[33mcommit 93c97e110b14d69a7293b1d33e4c77ea4ddec4ef[m
+Author: BrayanUpton <dev@github.com>
+Date:   Sat Jul 12 13:53:54 2025 +0800
+
+    public
+
+[33mcommit a5a8f648d750b647f408a99c2e945239167d1a4f[m
+Author: BrayanUpton <dev@github.com>
+Date:   Thu Jul 10 14:42:08 2025 +0800
+
+    style: update styles (6 files)
+
+[33mcommit 861a36b6759766f764d3dfa1bf7e1e05586dde5e[m
+Author: BrayanUpton <dev@github.com>
+Date:   Thu Jul 10 12:52:46 2025 +0800
+
+    feat: add new features in scripts
+
+[33mcommit 90cf5702f79d006a2fe5076d03f6f5a6026fe911[m
+Author: BrayanUpton <dev@github.com>
+Date:   Thu Jul 10 12:52:45 2025 +0800
+
+    contracts
