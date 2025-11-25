@@ -1,6 +1,6 @@
 # 🔐 Private IP Protection Platform
 
-> Privacy-preserving patent application system powered by Zama's Fully Homomorphic Encryption
+> Advanced privacy-preserving patent application system powered by Zama's Fully Homomorphic Encryption
 
 [![Tests](https://github.com/BrayanUpton/FHEIPProtection/workflows/Automated%20Tests/badge.svg)](https://github.com/BrayanUpton/FHEIPProtection/actions)
 [![Code Quality](https://github.com/BrayanUpton/FHEIPProtection/workflows/Code%20Quality/badge.svg)](https://github.com/BrayanUpton/FHEIPProtection/actions)
@@ -9,7 +9,7 @@
 
 🌐 **[Live Demo](https://fheip-protection.vercel.app/)** | 📺 **Video Demo: Download demo.mp4** | 📄 **[GitHub Repository](https://github.com/BrayanUpton/FHEIPProtection)**
 
-Built for demonstrating **practical privacy-preserving applications** using Zama's FHEVM technology.
+Built for demonstrating **practical privacy-preserving applications** using Zama's FHEVM technology with advanced security features.
 
 ---
 
@@ -17,16 +17,17 @@ Built for demonstrating **practical privacy-preserving applications** using Zama
 
 A blockchain-based patent application management system that implements **end-to-end encryption for sensitive intellectual property data**. Using Zama's Fully Homomorphic Encryption (FHE), patent applications remain encrypted on-chain while enabling authorized examiners to review and process them without exposing confidential information.
 
-### Core Concept: FHE Contract for Confidential Public Transport Analysis
+### Core Concept: Advanced FHE Contract with Gateway Callback Pattern
 
-This project demonstrates **Confidential Public Transport Analysis** using FHE smart contracts to protect privacy while enabling data-driven insights:
+This project demonstrates **Confidential Public Transport Analysis** using FHE smart contracts with innovative architecture:
 
-- **🔒 Privacy-First Architecture**: All sensitive data (patent titles, descriptions, claims) stored as encrypted values on-chain
-- **🚌 Real-World Application**: Similar to confidential public transit card data analysis where user privacy is paramount
-- **🔐 Encrypted Computation**: Process and analyze data without ever decrypting it
-- **👥 Role-Based Access**: Controlled decryption for authorized parties only (examiners, patent office)
-
-**Key Innovation**: Computation on encrypted data without decryption - protecting IP throughout the entire application lifecycle, just as public transport card data can be analyzed for service improvements while preserving passenger privacy.
+- **🔒 Privacy-First Architecture**: All sensitive data stored as encrypted values with obfuscation techniques
+- **🔄 Gateway Callback Mode**: Async processing pattern for decryption operations
+- **⏱️ Timeout Protection**: Prevents permanent locking with automatic refund mechanisms
+- **💰 Refund Mechanism**: Handles decryption failures gracefully
+- **🛡️ Enhanced Security**: Input validation, access control, overflow protection
+- **🎲 Privacy Protection**: Random multipliers for division attacks, price obfuscation
+- **⚡ Gas Optimization**: Efficient HCU (Homomorphic Compute Units) usage
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
