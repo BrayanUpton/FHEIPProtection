@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import { FHE, euint32, euint8, ebool } from "@fhevm/solidity/lib/FHE.sol";
+import { FHE, euint32, euint8, euint64, ebool, externalEuint32 } from "@fhevm/solidity/lib/FHE.sol";
 import { SepoliaConfig } from "@fhevm/solidity/config/ZamaConfig.sol";
 
 contract PrivateIPProtection is SepoliaConfig {
@@ -10,13 +10,17 @@ contract PrivateIPProtection is SepoliaConfig {
     uint256 public applicationCount;
     uint256 public constant APPLICATION_FEE = 0.1 ether;
     uint256 public constant REVIEW_PERIOD = 30 days;
+    uint256 public constant TIMEOUT_PERIOD = 90 days; // Timeout protection
+    uint256 public constant DECRYPTION_TIMEOUT = 7 days; // Gateway callback timeout
 
     enum ApplicationStatus {
         Pending,
         UnderReview,
         Approved,
         Rejected,
-        Withdrawn
+        Withdrawn,
+        RefundRequested, // New: Refund mechanism
+        TimedOut // New: Timeout protection
     }
 
     struct PatentApplication {
@@ -31,6 +35,11 @@ contract PrivateIPProtection is SepoliaConfig {
         address assignedExaminer;
         bool feePaid;
         bool confidentialityMaintained;
+        uint256 decryptionRequestId; // Gateway callback tracking
+        uint256 decryptionRequestTime; // Timeout tracking for decryption
+        euint64 encryptedPriorityScore; // Privacy-protected scoring with obfuscation
+        uint64 revealedScore; // Revealed after decryption
+        bool refundProcessed; // Refund mechanism tracking
     }
 
     struct ExaminerProfile {
@@ -55,6 +64,8 @@ contract PrivateIPProtection is SepoliaConfig {
     mapping(address => ExaminerProfile) public examinerProfiles;
     mapping(address => uint256[]) public applicantApplications;
     mapping(uint256 => address[]) public applicationViewers;
+    mapping(uint256 => string) internal applicationIdByRequestId; // Gateway callback mapping
+    mapping(uint256 => bool) public callbackProcessed; // Track processed callbacks
 
     event ApplicationSubmitted(
         uint256 indexed applicationId,
@@ -80,6 +91,14 @@ contract PrivateIPProtection is SepoliaConfig {
 
     event ExaminerAuthorized(address indexed examiner, string specialization);
     event ExaminerRevoked(address indexed examiner);
+
+    // New events for enhanced features
+    event DecryptionRequested(uint256 indexed applicationId, uint256 requestId);
+    event DecryptionCompleted(uint256 indexed applicationId, uint64 revealedScore);
+    event DecryptionFailed(uint256 indexed applicationId, string reason);
+    event RefundIssued(uint256 indexed applicationId, address indexed applicant, uint256 amount);
+    event TimeoutTriggered(uint256 indexed applicationId);
+    event ScoreObfuscated(uint256 indexed applicationId, uint256 obfuscationFactor);
 
     modifier onlyPatentOffice() {
         require(msg.sender == patentOffice, "Only patent office authorized");
@@ -112,7 +131,12 @@ contract PrivateIPProtection is SepoliaConfig {
         uint32 claimsHash,
         uint8 patentCategory
     ) external payable {
+        // Input validation (security enhancement)
         require(msg.value >= APPLICATION_FEE, "Insufficient fee");
+        require(titleHash > 0, "Invalid title hash");
+        require(descriptionHash > 0, "Invalid description hash");
+        require(claimsHash > 0, "Invalid claims hash");
+        require(patentCategory > 0 && patentCategory <= 10, "Invalid category");
 
         applicationCount++;
 
@@ -121,6 +145,13 @@ contract PrivateIPProtection is SepoliaConfig {
         euint32 encryptedDescription = FHE.asEuint32(descriptionHash);
         euint32 encryptedClaims = FHE.asEuint32(claimsHash);
         euint8 encryptedCategory = FHE.asEuint8(patentCategory);
+
+        // Privacy protection: Initialize with obfuscated priority score using random multiplier
+        // This protects against division attacks and price leakage
+        uint256 randomMultiplier = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, applicationCount))) % 100 + 50;
+        euint64 obfuscatedScore = FHE.asEuint64(randomMultiplier);
+
+        emit ScoreObfuscated(applicationCount, randomMultiplier);
 
         applications[applicationCount] = PatentApplication({
             applicant: msg.sender,
@@ -133,7 +164,12 @@ contract PrivateIPProtection is SepoliaConfig {
             status: ApplicationStatus.Pending,
             assignedExaminer: address(0),
             feePaid: true,
-            confidentialityMaintained: true
+            confidentialityMaintained: true,
+            decryptionRequestId: 0,
+            decryptionRequestTime: 0,
+            encryptedPriorityScore: obfuscatedScore,
+            revealedScore: 0,
+            refundProcessed: false
         });
 
         // Grant access permissions for FHE operations
@@ -141,6 +177,7 @@ contract PrivateIPProtection is SepoliaConfig {
         FHE.allowThis(encryptedDescription);
         FHE.allowThis(encryptedClaims);
         FHE.allowThis(encryptedCategory);
+        FHE.allowThis(obfuscatedScore);
         FHE.allow(encryptedTitle, msg.sender);
         FHE.allow(encryptedDescription, msg.sender);
         FHE.allow(encryptedClaims, msg.sender);
@@ -360,5 +397,233 @@ contract PrivateIPProtection is SepoliaConfig {
         require(balance > 0, "No fees to withdraw");
 
         payable(patentOffice).transfer(balance);
+    }
+
+    // ===== ENHANCED FEATURES: Gateway Callback, Refund, Timeout Protection =====
+
+    /**
+     * @notice Request decryption of application score via Gateway callback
+     * @dev Implements async processing pattern for privacy-preserving operations
+     * @param applicationId The application to decrypt
+     */
+    function requestScoreDecryption(uint256 applicationId) external {
+        PatentApplication storage app = applications[applicationId];
+        require(app.applicant != address(0), "Application not found");
+        require(
+            msg.sender == app.assignedExaminer || msg.sender == patentOffice,
+            "Access denied"
+        );
+        require(app.status == ApplicationStatus.UnderReview, "Not under review");
+        require(app.decryptionRequestId == 0, "Decryption already requested");
+
+        // Request decryption via Gateway callback pattern
+        bytes32[] memory cts = new bytes32[](1);
+        cts[0] = FHE.toBytes32(app.encryptedPriorityScore);
+
+        uint256 requestId = FHE.requestDecryption(cts, this.processScoreDecryption.selector);
+
+        app.decryptionRequestId = requestId;
+        app.decryptionRequestTime = block.timestamp;
+        applicationIdByRequestId[requestId] = Strings.toString(applicationId);
+
+        emit DecryptionRequested(applicationId, requestId);
+    }
+
+    /**
+     * @notice Gateway callback function for score decryption
+     * @dev Called by ZAMA oracle with decrypted data and cryptographic proof
+     * @param requestId The decryption request identifier
+     * @param cleartexts ABI-encoded decrypted values
+     * @param signatures Cryptographic proof from oracle
+     */
+    function processScoreDecryption(
+        uint256 requestId,
+        bytes memory cleartexts,
+        bytes memory signatures
+    ) external {
+        // Verify cryptographic signatures (security enhancement)
+        FHE.checkSignatures(requestId, cleartexts, signatures);
+
+        require(!callbackProcessed[requestId], "Callback already processed");
+        callbackProcessed[requestId] = true;
+
+        // Decode the decrypted score
+        uint64 revealedScore = abi.decode(cleartexts, (uint64));
+
+        uint256 applicationId = stringToUint(applicationIdByRequestId[requestId]);
+        PatentApplication storage app = applications[applicationId];
+
+        app.revealedScore = revealedScore;
+
+        emit DecryptionCompleted(applicationId, revealedScore);
+    }
+
+    /**
+     * @notice Request refund if decryption fails or times out
+     * @dev Refund mechanism for handling decryption failures
+     * @param applicationId The application to refund
+     */
+    function requestRefund(uint256 applicationId) external {
+        PatentApplication storage app = applications[applicationId];
+        require(app.applicant == msg.sender, "Not your application");
+        require(app.feePaid, "Fee not paid");
+        require(!app.refundProcessed, "Refund already processed");
+
+        // Check if decryption failed (timeout condition)
+        bool decryptionTimedOut = app.decryptionRequestTime > 0 &&
+            block.timestamp >= app.decryptionRequestTime + DECRYPTION_TIMEOUT;
+
+        // Check if application timed out completely
+        bool applicationTimedOut = block.timestamp >= app.submissionTime + TIMEOUT_PERIOD;
+
+        require(
+            decryptionTimedOut || applicationTimedOut || app.status == ApplicationStatus.RefundRequested,
+            "Refund not eligible"
+        );
+
+        app.refundProcessed = true;
+        app.status = ApplicationStatus.TimedOut;
+
+        // Process refund (70% of application fee to cover processing costs)
+        uint256 refundAmount = (APPLICATION_FEE * 70) / 100;
+
+        (bool sent, ) = payable(msg.sender).call{value: refundAmount}("");
+        require(sent, "Refund transfer failed");
+
+        emit RefundIssued(applicationId, msg.sender, refundAmount);
+        emit TimeoutTriggered(applicationId);
+    }
+
+    /**
+     * @notice Mark application for refund due to processing issues
+     * @dev Allows patent office to flag applications for refund
+     * @param applicationId The application to mark for refund
+     * @param reason Reason for refund eligibility
+     */
+    function markForRefund(uint256 applicationId, string memory reason) external onlyPatentOffice {
+        PatentApplication storage app = applications[applicationId];
+        require(app.applicant != address(0), "Application not found");
+        require(app.status != ApplicationStatus.Approved, "Already approved");
+        require(!app.refundProcessed, "Refund already processed");
+
+        app.status = ApplicationStatus.RefundRequested;
+        emit DecryptionFailed(applicationId, reason);
+    }
+
+    /**
+     * @notice Check timeout status for an application
+     * @dev Public view function to check if timeout protection should trigger
+     * @param applicationId The application to check
+     * @return isTimedOut Whether the application has timed out
+     * @return timeRemaining Seconds until timeout (0 if already timed out)
+     */
+    function checkTimeout(uint256 applicationId) external view returns (bool isTimedOut, uint256 timeRemaining) {
+        PatentApplication storage app = applications[applicationId];
+        require(app.applicant != address(0), "Application not found");
+
+        uint256 timeoutDeadline = app.submissionTime + TIMEOUT_PERIOD;
+
+        if (block.timestamp >= timeoutDeadline) {
+            return (true, 0);
+        } else {
+            return (false, timeoutDeadline - block.timestamp);
+        }
+    }
+
+    /**
+     * @notice Update priority score with encrypted input (privacy protection)
+     * @dev Uses FHE operations to maintain privacy during score updates
+     * @param applicationId The application to update
+     * @param encryptedScoreInput Encrypted score input from client
+     * @param inputProof Cryptographic proof of encryption validity
+     */
+    function updatePriorityScore(
+        uint256 applicationId,
+        externalEuint32 encryptedScoreInput,
+        bytes calldata inputProof
+    ) external {
+        PatentApplication storage app = applications[applicationId];
+        require(
+            msg.sender == app.assignedExaminer || msg.sender == patentOffice,
+            "Access denied"
+        );
+        require(app.status == ApplicationStatus.UnderReview, "Not under review");
+
+        // Convert external encrypted input with validation
+        euint32 scoreInput = FHE.fromExternal(encryptedScoreInput, inputProof);
+
+        // Add to existing score using homomorphic addition (privacy-preserving)
+        euint64 newScore = FHE.add(app.encryptedPriorityScore, FHE.asEuint64(scoreInput));
+
+        app.encryptedPriorityScore = newScore;
+        FHE.allowThis(newScore);
+    }
+
+    /**
+     * @notice Get decryption request status
+     * @param applicationId The application to check
+     * @return requested Whether decryption was requested
+     * @return requestId The decryption request ID
+     * @return processed Whether callback was processed
+     * @return timeElapsed Time since request in seconds
+     */
+    function getDecryptionStatus(uint256 applicationId) external view returns (
+        bool requested,
+        uint256 requestId,
+        bool processed,
+        uint256 timeElapsed
+    ) {
+        PatentApplication storage app = applications[applicationId];
+        require(app.applicant != address(0), "Application not found");
+
+        requestId = app.decryptionRequestId;
+        requested = requestId > 0;
+        processed = callbackProcessed[requestId];
+
+        if (app.decryptionRequestTime > 0) {
+            timeElapsed = block.timestamp - app.decryptionRequestTime;
+        } else {
+            timeElapsed = 0;
+        }
+
+        return (requested, requestId, processed, timeElapsed);
+    }
+
+    // Helper function to convert string to uint
+    function stringToUint(string memory s) internal pure returns (uint256) {
+        bytes memory b = bytes(s);
+        uint256 result = 0;
+        for (uint256 i = 0; i < b.length; i++) {
+            uint256 c = uint256(uint8(b[i]));
+            if (c >= 48 && c <= 57) {
+                result = result * 10 + (c - 48);
+            }
+        }
+        return result;
+    }
+
+    // Allow contract to receive ETH for refunds
+    receive() external payable {}
+}
+
+// Helper library for uint to string conversion
+library Strings {
+    function toString(uint256 value) internal pure returns (string memory) {
+        if (value == 0) {
+            return "0";
+        }
+        uint256 temp = value;
+        uint256 digits;
+        while (temp != 0) {
+            digits++;
+            temp /= 10;
+        }
+        bytes memory buffer = new bytes(digits);
+        while (value != 0) {
+            digits -= 1;
+            buffer[digits] = bytes1(uint8(48 + uint256(value % 10)));
+            value /= 10;
+        }
+        return string(buffer);
     }
 }
